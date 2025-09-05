@@ -1,0 +1,57 @@
+/* You can add global styles to this file, and also import other style files */
+
+.app-container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.header-menu {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+}
+
+.nav-menu {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.nav-button {
+  background-color: #ffffff;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  color: #495057;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.nav-button:hover {
+  background-color: #e9ecef;
+  border-color: #adb5bd;
+}
+
+.nav-button.active {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: #ffffff;
+}
+
+.nav-button.active:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+
+.content {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}

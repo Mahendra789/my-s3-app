@@ -1,25 +1,28 @@
 <!-- src/app/app.component.html -->
 <amplify-authenticator>
-  <div
-    style="
-      max-width: 720px;
-      margin: 2rem auto;
-      padding: 1rem;
-      border: 1px solid #eee;
-      border-radius: 12px;
-    "
-  >
-    <h2>Upload to S3 (protected)</h2>
+  <div class="app-container">
+    <!-- Header Menu -->
+    <header class="header-menu">
+      <nav class="nav-menu">
+        <button 
+          class="nav-button" 
+          [class.active]="activeComponent() === 'file-upload'"
+          (click)="setActiveComponent('file-upload')">
+          File Upload
+        </button>
+        <button 
+          class="nav-button" 
+          [class.active]="activeComponent() === 'crud'"
+          (click)="setActiveComponent('crud')">
+          CRUD
+        </button>
+      </nav>
+    </header>
 
-    <input type="file" (change)="onFileSelected($event)" multiple [disabled]="busy" />
-    <p *ngIf="busy">Uploading…</p>
-
-    <h3 style="margin-top: 1.5rem">Uploaded files (this session)</h3>
-    <ul>
-      <li *ngFor="let p of uploadedPaths">
-        {{ p }}
-        <button (click)="download(p)">Download</button>
-      </li>
-    </ul>
+    <!-- Content Area -->
+    <main class="content">
+      <app-file-upload *ngIf="activeComponent() === 'file-upload'"></app-file-upload>
+      <app-crud *ngIf="activeComponent() === 'crud'"></app-crud>
+    </main>
   </div>
 </amplify-authenticator>
