@@ -1,12 +1,58 @@
-<div
-  style="
-    max-width: 720px;
-    margin: 2rem auto;
-    padding: 1rem;
-    border: 1px solid #eee;
-    border-radius: 12px;
-  "
->
+<div class="crud-container">
   <h2>CRUD Operations</h2>
-  <p>This is the CRUD component. Add your CRUD functionality here.</p>
+
+  <!-- Add new item form -->
+  <div class="add-form">
+    <h3>Add New Item</h3>
+    <input [(ngModel)]="newName" placeholder="Name" />
+    <input [(ngModel)]="newDesc" placeholder="Description" />
+    <button (click)="add()">Add Item</button>
+  </div>
+
+  <!-- Records list -->
+  <div class="records-section">
+    <h3>All Records ({{ items.length }} items)</h3>
+    <div *ngIf="items.length === 0" class="empty-state">
+      No records found. Add some items above!
+    </div>
+    <div *ngIf="items.length > 0">
+      <div *ngFor="let item of items; let i = index" class="record-item">
+        <!-- Display mode -->
+        <div *ngIf="!isEditing(item)" class="record-content">
+          <div class="record-name">{{ item.name }}</div>
+          <div class="record-description">
+            {{ item.description || 'No description' }}
+          </div>
+          <div class="record-meta">
+            ID: {{ item.id }} | Created: {{ item.createdAt | date: 'short' }} | Updated:
+            {{ item.updatedAt | date: 'short' }}
+          </div>
+        </div>
+
+        <!-- Edit mode -->
+        <div *ngIf="isEditing(item)" class="edit-content">
+          <div class="edit-form">
+            <input [(ngModel)]="editName" placeholder="Name" class="edit-input" />
+            <input [(ngModel)]="editDesc" placeholder="Description" class="edit-input" />
+            <div class="edit-meta">
+              ID: {{ item.id }} | Created: {{ item.createdAt | date: 'short' }} | Updated:
+              {{ item.updatedAt | date: 'short' }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Action buttons -->
+        <div class="action-buttons">
+          <button *ngIf="!isEditing(item)" (click)="startEdit(item)" class="edit-button">
+            Edit
+          </button>
+          <button *ngIf="isEditing(item)" (click)="saveEdit()" class="save-button">Save</button>
+          <button *ngIf="isEditing(item)" (click)="cancelEdit()" class="cancel-button">
+            Cancel
+          </button>
+          <button (click)="remove(item.id)" class="delete-button">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
