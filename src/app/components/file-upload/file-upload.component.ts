@@ -1,35 +1,12 @@
 import { Component, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FileStorageService } from '../services/file-storage.service';
+import { FileStorageService } from '../../services/file-storage.service';
 
 @Component({
   selector: 'app-file-upload',
   imports: [CommonModule],
-  template: `
-    <div
-      style="
-        max-width: 720px;
-        margin: 2rem auto;
-        padding: 1rem;
-        border: 1px solid #eee;
-        border-radius: 12px;
-      "
-    >
-      <h2>Upload to S3 (protected)</h2>
-
-      <input type="file" (change)="onFileSelected($event)" multiple [disabled]="busy()" />
-      <p *ngIf="busy()">Uploading…</p>
-
-      <h3 style="margin-top: 1.5rem">Uploaded files (this session)</h3>
-      <ul>
-        <li *ngFor="let p of uploadedPaths()">
-          {{ p }}
-          <button (click)="download(p)">Download</button>
-        </li>
-      </ul>
-    </div>
-  `,
-  styleUrl: './file-upload.component.scss'
+  templateUrl: './file-upload.component.html',
+  styleUrl: './file-upload.component.scss',
 })
 export class FileUploadComponent {
   uploadedPaths = signal<string[]>([]);
@@ -40,12 +17,12 @@ export class FileUploadComponent {
   async onFileSelected(ev: Event) {
     const input = ev.target as HTMLInputElement;
     if (!input.files || input.files.length === 0) return;
-    
+
     this.busy.set(true);
     try {
       for (const file of Array.from(input.files)) {
         const path = await this.files.uploadToProtected(file);
-        this.uploadedPaths.update(paths => [...paths, path]);
+        this.uploadedPaths.update((paths) => [...paths, path]);
       }
     } finally {
       this.busy.set(false);

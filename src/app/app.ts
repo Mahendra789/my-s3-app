@@ -1,8 +1,8 @@
 import { Component, signal } from '@angular/core';
 import { AmplifyAuthenticatorModule } from '@aws-amplify/ui-angular';
 import { CommonModule } from '@angular/common';
-import { FileUploadComponent } from './components/file-upload.component';
-import { CrudComponent } from './components/crud.component';
+import { FileUploadComponent } from './components/file-upload/file-upload.component';
+import { CrudComponent } from './components/crud/crud.component';
 
 @Component({
   selector: 'app-root',

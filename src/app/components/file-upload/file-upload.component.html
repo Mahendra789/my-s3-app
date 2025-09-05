@@ -1,0 +1,22 @@
+<div
+  style="
+    max-width: 720px;
+    margin: 2rem auto;
+    padding: 1rem;
+    border: 1px solid #eee;
+    border-radius: 12px;
+  "
+>
+  <h2>Upload to S3 (protected)</h2>
+
+  <input type="file" (change)="onFileSelected($event)" multiple [disabled]="busy()" />
+  <p *ngIf="busy()">Uploading…</p>
+
+  <h3 style="margin-top: 1.5rem">Uploaded files (this session)</h3>
+  <ul>
+    <li *ngFor="let p of uploadedPaths()">
+      {{ p }}
+      <button (click)="download(p)">Download</button>
+    </li>
+  </ul>
+</div>
