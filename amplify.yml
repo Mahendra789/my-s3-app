@@ -1,14 +1,17 @@
 version: 1
+backend:
+  phases:
+    build:
+      commands:
+        - npx ampx generate outputs --out amplify_outputs.json
 frontend:
   phases:
     preBuild:
       commands:
-        - nvm install 20.19.4
-        - nvm use 20.19.4
-        - node -v
         - npm ci
     build:
       commands:
+        - npx ampx generate outputs --out amplify_outputs.json # <-- ensure outputs exist
         - npm run build
   artifacts:
     baseDirectory: dist
