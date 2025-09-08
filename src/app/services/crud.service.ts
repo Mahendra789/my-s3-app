@@ -2,6 +2,7 @@
 import { Injectable } from '@angular/core';
 import { generateClient } from 'aws-amplify/api';
 import { createItem, updateItem, deleteItem, getItem, listItems } from '../../../mutations';
+import { onCreateItem, onUpdateItem, onDeleteItem } from '../../../subscriptions';
 
 const client = generateClient();
 
@@ -38,6 +39,42 @@ export class CrudService {
   async list() {
     return client.graphql({
       query: listItems,
+    });
+  }
+
+  // Subscription methods for real-time updates
+  subscribeToCreate() {
+    return client.graphql({
+      query: onCreateItem,
+    });
+  }
+
+  subscribeToUpdate() {
+    return client.graphql({
+      query: onUpdateItem,
+    });
+  }
+
+  subscribeToDelete() {
+    return client.graphql({
+      query: onDeleteItem,
+    });
+  }
+
+  // Lambda-based operations
+  async processItem(input: any) {
+    return client.graphql({
+      query: `
+        query ProcessItem($input: LambdaInput!) {
+          processItem(input: $input) {
+            success
+            data
+            message
+            error
+          }
+        }
+      `,
+      variables: { input },
     });
   }
 }
